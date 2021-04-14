@@ -9,11 +9,12 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { AppFooter } from "./AppFooter";
 import { ParallaxProvider } from 'react-scroll-parallax';
+import Image from './public/assets/farm.png';
 
 const theme = createMuiTheme({
   palette: {
     backgroundImage: {
-      default: "./public/assets/farm.png"
+      default: `url(${Image})`
     }
   }
 });
