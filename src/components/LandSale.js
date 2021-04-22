@@ -66,7 +66,7 @@ const useStyles = makeStyles(theme => ({
   },
   card: {
     maxWidth: 'auto',
-    backgroundColor: "#095938",
+    backgroundColor: "transparent",
   },
   media: {
     height: 300,
@@ -84,6 +84,7 @@ const classes = useStyles();
 const isDesktop = window.innerWidth < 1000;
 const [isSubmitting, setIsSubmitting] = useState(false);
 const [isSubmitting1, setIsSubmitting1] = useState(false);
+const [isSubmitting2, setIsSubmitting2] = useState(false);
 const image1 = "https://i.imgur.com/5SKbll8.png";
 
 const [seedAsia, setSeedAsia] = useState();
@@ -91,6 +92,7 @@ const [seedAfrica, setSeedAfrica] = useState();
 const [seedAfghanistan, setSeedAfghanistan] = useState();
 const [seedJamaica, setSeedJamaica] = useState();
 const [seedMexico, setSeedMexico] = useState();
+const [waterTowerLevel1, setwaterTowerLevel1] = useState();
 const [seedSouthAmerica, setSeedSouthAmerica] = useState();
 
 const [seedAsiaPrices, setAsiaPrices] = useState([0]);
@@ -134,7 +136,7 @@ const loadPriceData = async () => {
   var southAmericaBundles = pricedata.stats.supply.land.southAmerica;
 
   var waterTowerPrice = pricedata.stats.prices.waterPlants.lvl1.price;
-  var waterTowerQuantity = pricedata.stats.supply.land.mexico;
+  var waterTowerQuantity = pricedata.stats.supply.totalWaterTowersC;
 
   setAsiaPrices(seedAsiaPrice);
   setAfricaPrices(seedAfricaPrice);
@@ -213,7 +215,7 @@ const handleSubmitMexico = async e => {
 const handleSubmitWaterTower = async e => {
   e.preventDefault();
   if (username) {
-    setIsSubmitting(true);
+    setIsSubmitting2(true);
 
     const memo = `water1`;
     const to = "hashkings";
@@ -240,10 +242,10 @@ const handleSubmitWaterTower = async e => {
             true
           );
         });
-        setIsSubmitting(false);
-        setSeedMexico();
+        setIsSubmitting2(false);
+        setwaterTowerLevel1();
       } catch {
-        setIsSubmitting(false);
+        setIsSubmitting2(false);
       }
     } else {
       window.location.href = sign(
@@ -321,7 +323,7 @@ let buttonLabel1 = "Purchase";
 if (isSubmitting1) buttonLabel1 = "Purchasing";
 
 let buttonLabel2 = "Purchase";
-if (isSubmitting1) buttonLabel2 = "Purchasing";
+if (isSubmitting2) buttonLabel2 = "Purchasing";
 
 if (!username) buttonLabel = "Please Sign in";
 if (!username) buttonLabel1 = "Please Sign in";
@@ -401,13 +403,18 @@ if (!username) buttonLabel2 = "Please Sign in";
     </Grid>
 
     <Grid container spacing={3}>
-        <Grid item xs>
+    <Grid item xs={4}></Grid>
+        <Grid item xs={4}>
         <Card className={classes.card} raised={true}>
+        <Grid item xs={4}></Grid>
+        <Grid item xs={4}>
         <CardMedia
               className={classes.media}
-              image="https://i.imgur.com/OlrsNST.png"
-              title="Market"
-            />
+              image="https://i.imgur.com/DigeZm0.png"
+              title="Hashkings Water Tower Level 1"
+        />
+        </Grid>
+        <Grid item xs={4}></Grid>
             <CardContent>
               <Typography gutterBottom variant="h5" component="h2">
               <font color="black" className={classes.font}>Level 1 Water Towers ({waterTowers}  Available)</font>
@@ -424,13 +431,14 @@ if (!username) buttonLabel2 = "Please Sign in";
               </Typography>
               <br/>
               <Button
-              disabled={isSubmitting || !username}
+              disabled={isSubmitting2 || !username}
               label={buttonLabel2}
               onClick={handleSubmitWaterTower}
               />
             </CardContent>
           </Card>
         </Grid>
+        <Grid item xs={4}></Grid>
     </Grid>
 
     
