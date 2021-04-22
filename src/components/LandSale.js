@@ -337,7 +337,7 @@ if (!username) buttonLabel2 = "Please Sign in";
       <Container fixed>        
       <Grid container spacing={3}>
 
-      <Grid item xs className={}> 
+      <Grid item xs> 
       <Card className={classes.card} raised={true}>
       <CardMedia
               className={classes.media}
