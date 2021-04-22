@@ -28,6 +28,9 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     height: "auto",
   },
+  background: {
+    backgroundImage: 'url()'
+  },
   container: {
     display: 'grid',
     gridTemplateColumns: 'repeat(12, 1fr)',
@@ -95,6 +98,7 @@ const [seedAfricaPrices, setAfricaPrices] = useState([0]);
 const [seedAfghanistanPrices, setAfghanistanPrices] = useState([0]);
 const [seedJamaicaPrices, setJamaicaPrices] = useState([0]);
 const [seedMexicoPrices, setMexicoPrices] = useState([0]);
+const [waterTowerPrices, setWaterTowerPrices] = useState([0]);
 const [seedSouthAmericaPrices, setSouthAmericaPrices] = useState([0]);
 
 const [asiaBundles, setAsiaQuantity] = useState([0]);
@@ -102,6 +106,7 @@ const [africaBundles, setAfricaQuantity] = useState([0]);
 const [afghanistanBundles, setAfghanistanQuantity] = useState([0]);
 const [jamaicaBundles, setJamaicaQuantity] = useState([0]);
 const [mexicoBundles, setMexicoQuantity] = useState([0]);
+const [waterTowers, setWaterTowersQuantity] = useState([0]);
 const [southAmericaBundles, setSouthAmericaQuantity] = useState([0]);
 
 const hasHiveKeychain = useHiveKeychain();
@@ -118,6 +123,7 @@ const loadPriceData = async () => {
   var seedAfghanistanPrice = pricedata.stats.prices.land.price;
   var seedJamaicaPrice = pricedata.stats.prices.land.price;
   var seedMexicoPrice = pricedata.stats.prices.land.mexico.price;
+  var waterTowerPrice = pricedata.stats.prices.waterPlants.lvl1.price;
   var seedSouthAmericaPrice = pricedata.stats.prices.land.southAmerica.price;
 
   var asiaBundles = pricedata.stats.supply.land.asia;
@@ -126,6 +132,9 @@ const loadPriceData = async () => {
   var jamaicaBundles = pricedata.stats.supply.land.jamaica;
   var mexicoBundles = pricedata.stats.supply.land.mexico;
   var southAmericaBundles = pricedata.stats.supply.land.southAmerica;
+
+  var waterTowerPrice = pricedata.stats.prices.waterPlants.lvl1.price;
+  var waterTowerQuantity = pricedata.stats.supply.land.mexico;
 
   setAsiaPrices(seedAsiaPrice);
   setAfricaPrices(seedAfricaPrice);
@@ -140,6 +149,9 @@ const loadPriceData = async () => {
   setJamaicaQuantity(jamaicaBundles);
   setMexicoQuantity(mexicoBundles);
   setSouthAmericaQuantity(southAmericaBundles);
+
+  setWaterTowerPrices(waterTowerPrice);
+  setWaterTowersQuantity(waterTowerQuantity)
 }
 
 useEffect(() => {
@@ -154,6 +166,58 @@ const handleSubmitMexico = async e => {
     const memo = `mexico`;
     const to = "hashkings";
     const amount = seedMexicoPrices.toFixed(3).toString();
+    const currency = "HIVE";
+
+    if (hasHiveKeychain()) {
+      const hive_keychain = window.hive_keychain;
+      try {
+        await new Promise((resolve, reject) => {
+          return hive_keychain.requestTransfer(
+            username,
+            to,
+            amount,
+            memo,
+            currency,
+            response => {
+              if (response.success) {
+                resolve(response);
+              } else {
+                reject();
+              }
+            },
+            true
+          );
+        });
+        setIsSubmitting(false);
+        setSeedMexico();
+      } catch {
+        setIsSubmitting(false);
+      }
+    } else {
+      window.location.href = sign(
+        "transfer",
+        {
+          to,
+          from: username,
+          amount: `${amount} ${currency}`,
+          memo
+        },
+        process.env.REACT_APP_URL
+          ? `${process.env.REACT_APP_URL}/`
+          : "https://localhost:3000/"
+      );
+    }
+  }
+};
+
+const handleSubmitWaterTower = async e => {
+  e.preventDefault();
+  if (username) {
+    setIsSubmitting(true);
+
+    const memo = `water1`;
+    const to = "hashkings";
+    const amount = waterTowerPrices.toFixed(3).toString();
     const currency = "HIVE";
 
     if (hasHiveKeychain()) {
@@ -256,7 +320,12 @@ if (isSubmitting) buttonLabel = "Purchasing";
 let buttonLabel1 = "Purchase";
 if (isSubmitting1) buttonLabel1 = "Purchasing";
 
+let buttonLabel2 = "Purchase";
+if (isSubmitting1) buttonLabel2 = "Purchasing";
+
 if (!username) buttonLabel = "Please Sign in";
+if (!username) buttonLabel1 = "Please Sign in";
+if (!username) buttonLabel2 = "Please Sign in";
 
 
   return(
@@ -268,7 +337,7 @@ if (!username) buttonLabel = "Please Sign in";
       <Container fixed>        
       <Grid container spacing={3}>
 
-      <Grid item xs> 
+      <Grid item xs className={}> 
       <Card className={classes.card} raised={true}>
       <CardMedia
               className={classes.media}
@@ -329,9 +398,42 @@ if (!username) buttonLabel = "Please Sign in";
             </CardContent>
           </Card>
         </Grid>
-
-        
     </Grid>
+
+    <Grid container spacing={3}>
+        <Grid item xs>
+        <Card className={classes.card} raised={true}>
+        <CardMedia
+              className={classes.media}
+              image="https://i.imgur.com/OlrsNST.png"
+              title="Market"
+            />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="h2">
+              <font color="black" className={classes.font}>Level 1 Water Towers ({waterTowers}  Available)</font>
+              </Typography>
+              <Typography variant="body2" color="textSecondary" component="p">
+              <font color="black" className={classes.font}>
+              Purchase a level 1 water tower here
+              </font>
+              </Typography>
+              <br/>
+              <br/>
+              <Typography variant="body2" color="textSecondary" component="p">
+              <font color="black" className={classes.font}><b>Price: </b> {waterTowerPrices} HIVE</font>
+              </Typography>
+              <br/>
+              {/*<Button
+              disabled={isSubmitting || !username}
+              label={buttonLabel2}
+              onClick={handleSubmitWaterTower}
+              />*/}
+            </CardContent>
+          </Card>
+        </Grid>
+    </Grid>
+
+    
       
       <br/>
       </Container>

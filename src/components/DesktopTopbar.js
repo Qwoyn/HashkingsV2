@@ -113,7 +113,7 @@ export default function DesktopTopbar(){
             </HtmlTooltip>
             </Grid> 
             
-            {/*<Grid item xs={1}>
+            <Grid item xs={1}>
             <HtmlTooltip
               title={
                 <React.Fragment>
@@ -127,7 +127,7 @@ export default function DesktopTopbar(){
             <SaleIcon />
             </IconButton>
             </HtmlTooltip>
-            </Grid>*/}
+            </Grid>
                         
         </Grid>
     </Grid>
