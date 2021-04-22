@@ -423,11 +423,11 @@ if (!username) buttonLabel2 = "Please Sign in";
               <font color="black" className={classes.font}><b>Price: </b> {waterTowerPrices} HIVE</font>
               </Typography>
               <br/>
-              {/*<Button
+              <Button
               disabled={isSubmitting || !username}
               label={buttonLabel2}
               onClick={handleSubmitWaterTower}
-              />*/}
+              />
             </CardContent>
           </Card>
         </Grid>
