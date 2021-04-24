@@ -222,7 +222,7 @@ const handleSubmitWaterTower = async e => {
 
     const memo = `water1`;
     const to = "hashkings";
-    const amount = waterTowerPrices.toFixed(3).toString();
+    const amount = waterTowerPrices.toString();
     const currency = "HIVE";
 
     if (hasHiveKeychain()) {
