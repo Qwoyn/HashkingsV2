@@ -77,7 +77,10 @@ const useStyles = makeStyles(theme => ({
     width: 270,
   },
   font: {
-    color: "#04750b"
+    color: "#0323E1"
+  },
+  font2: {
+    color: "white"
   }
 }));
 
@@ -420,17 +423,17 @@ if (!username) buttonLabel2 = "Please Sign in";
         <Grid item xs={4}></Grid>
             <CardContent>
               <Typography gutterBottom variant="h5" component="h2">
-              <font color="black" className={classes.font}>Level 1 Water Towers ({waterTowers}  Available)</font>
+              <font className={classes.font2}>Level 1 Water Towers ({waterTowers}  Available)</font>
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
-              <font color="black" className={classes.font}>
+              <font className={classes.font2}>
               Purchase a level 1 water tower here
               </font>
               </Typography>
               <br/>
               <br/>
               <Typography variant="body2" color="textSecondary" component="p">
-              <font color="black" className={classes.font}><b>Price: </b> {waterTowerPrices} HIVE</font>
+              <font className={classes.font2}><b>Price: </b> {waterTowerPrices} HIVE</font>
               </Typography>
               <br/>
               <Button
