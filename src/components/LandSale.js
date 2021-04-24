@@ -77,7 +77,7 @@ const useStyles = makeStyles(theme => ({
     width: 270,
   },
   font: {
-    color: "#0323E1"
+    color: "#8c03fc"
   }
 }));
 
