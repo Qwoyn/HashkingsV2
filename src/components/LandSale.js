@@ -76,6 +76,9 @@ const useStyles = makeStyles(theme => ({
     height: 100,
     width: 270,
   },
+  font: {
+    color: "#0323E1"
+  }
 }));
 
 export const LandSale = () => {
@@ -439,10 +442,7 @@ if (!username) buttonLabel2 = "Please Sign in";
           </Card>
         </Grid>
         <Grid item xs={4}></Grid>
-    </Grid>
-
-    
-      
+    </Grid>    
       <br/>
       </Container>
     </div>
@@ -474,4 +474,3 @@ if (!username) buttonLabel2 = "Please Sign in";
   );
 
 };
-
